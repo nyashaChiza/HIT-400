@@ -1,0 +1,210 @@
+{% extends 'layout/layout2.html' %}
+{% block body %}
+
+  <!--================Hero Banner Area Start =================-->
+    <section class="hero-banner d-flex align-items-center">
+        <div class="container text-center">
+            <h2>Monitor</h2>
+            <nav aria-label="breadcrumb" class="banner-breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Analytics</li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+    <!--================Hero Banner Area End =================-->
+
+    <!--================ Start Monitor Area =================-->
+    <section class=" area-padding bg-light">
+      <div class="row mx-auto">
+        
+      <div class="col-md-6">
+        <div class="card ">
+            <div class="card-header bg-dark text-white ">
+                <h4 class="card-title">Transaction Classification</h4>
+                <p class="card-category">Fraudulent Vs Normal</p>
+              
+            </div>
+            <div class="card-body ">
+              
+    </div>
+         <div class="mx-auto " style="width: 85%; height: 350px;" >
+          <canvas id="bar-chart-horizontal" width="800" height="450"></canvas>
+        </div>
+            </div>
+            
+        </div>
+
+        <div class="col-md-5 pull-right">
+          <div class="card ">
+              <div class="card-header bg-dark text-white ">
+                  <h4 class="card-title">Model Accuracy</h4>
+                  <p class="card-category">Algorithm: Random Forest Model</p>
+                  <p class="card-category">Model Version: 1.0.0</p>
+              </div>
+              <div class="card-body ">
+                
+      </div>
+           <div class="mx-auto " style="width: 85%; height: 320px;" >
+            <canvas id="doughnut-chart" width="900" height="545"></canvas>
+          </div>
+              </div>
+              
+          </div>
+        </div>
+          </br>
+          <div class="row mx-auto">
+            <div class="col-md-8">
+              <div class="card ">
+                  <div class="card-header bg-dark text-white ">
+                      <h4 class="card-title">Transaction Distrubution</h4>
+                      <p class="card-category">Transactions Vs Location</p>
+                  </div>
+                  <div class="card-body ">
+                    
+          </div>
+               <div class="mx-auto "  >
+                <canvas id="bar-chart-grouped" width="950" height="450"></canvas>
+              </div>
+                  </div>
+                  
+                  
+              </div>
+              <div class="col-md-4">
+                <div class="card ">
+                    <div class="card-header bg-dark text-white ">
+                        <h4 class="card-title">System Information</h4>
+                        <p class="card-category">Statistics</p>
+                    </div>
+                    <div class="card-body ">
+                   <br > <br>
+                      <table class="table">
+                        <thead>
+                          <tr>
+                           
+                            <th scope="col">Metric</th>
+                            <th scope="col">Value</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                      
+                            <td>Total Transactions</td>
+                            <td>{{ stats }}</td>
+                           
+                          </tr>
+                          <tr>
+                           
+                            <td>Requests/sec</td>
+                            <td>0.2</td>
+                     
+                          </tr>
+                          <tr>
+                           
+                            <td>Threads Active</td>
+                            <td>1</td>
+                     
+                          </tr>
+                          <tr>
+                           
+                            <td>Up Time (%)</td>
+                            <td>96</td>
+                     
+                          </tr>
+                          <td></td> <td></td>
+                          <tr>
+                        
+                
+                          </tr>
+                        </tbody>
+                      </table>
+            </div>
+                 <div class="mx-auto "  >
+              
+                </div>
+                    </div>
+                    
+                    
+                </div>
+          </div>
+          
+        </div>
+        
+    </div>
+
+
+     <script>
+new Chart(document.getElementById("bar-chart-horizontal"), {
+    type: 'horizontalBar',
+    data: {
+      labels: ["Clean",  "Fraudulent"],
+      datasets: [
+        {
+          label: "Credit Card Transactions",
+          backgroundColor: ["#3e95cd", "#c45850"],
+          data: {{ bar_data }}
+        }
+      ]
+    },
+    options: {
+      legend: { display:true },
+      title: {
+        display: true,
+        text: 'Clean Vs Fraudulent Transactions'
+      }
+    }
+});
+	</script>
+   
+         <script>
+          new Chart(document.getElementById("bar-chart-grouped"), {
+    type: 'bar',
+    data: {
+      labels:['Marondera', 'Gweru', 'Bulawayo', 'Harare'],
+      datasets: [
+        {
+          label: "Clean",
+          backgroundColor: "#3e95cd",
+          data: {{grouped_data[2] }}
+        }, {
+          label: "Fraudulent",
+          backgroundColor: "#8e5ea2",
+          data: {{grouped_data[1] }}
+        }
+      ]
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'Transactions Vs Location'
+      }
+    }
+});
+        </script>
+          <script>
+        new Chart(document.getElementById("doughnut-chart"), {
+            type: 'doughnut',
+            data: {
+              labels: ["Accurate", "Inaccurate"],
+              datasets: [
+                {
+                  label: "Population (millions)",
+                  backgroundColor: ["#3e95cd","#e8c3b9"],
+                  data: [94,6]
+                }
+              ]
+            },
+            options: {
+              title: {
+                display: true,
+                text: 'Model Accuracy'
+              }
+            }
+        });
+      </script>
+</section>
+    <!--================Monitor Area End =================-->
+
+
+{% endblock %}
